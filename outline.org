@@ -1,0 +1,59 @@
+* intro
+* Alternate, accurate title
+** Middleware, as envisioned by pep 333, for general purpose class de-bloating
+* motivation
+** bloated classes
+*** Rails User class
+**** often requires rework
+**** sub-objects don't always map to tables
+** solutions
+*** buncho mixins (authlogic)
+*** object composition
+**** ivar per action
+*** composition doesn't cover all bases
+**** ordered actions as objects
+**** composed object dependencies
+* rack review
+** pep 333
+** simple stdout log rack
+** env
+** app
+** call
+** endpoint vs middleware
+* vagrant examples
+** what is vagrant?
+** vagrant operates on VMs
+** list of things done when creating a vm for the first time
+** all in the vm class?
+*** hard to read/understand method dependencies
+*** hard to test (too much stubing)
+** we recognized this as a general issue before the project
+** initial solution: object compostion with a common interface
+*** action classes + runner
+*** execute! method
+*** iterate over actions call execute
+** issue: ordering
+*** originally defined dependencies as actions composed in actions
+*** prepare all, execute! all, cleanup all
+*** actions do not participate in the composition ordering
+*** :(
+** middleware stacks!
+*** sample :up stack (create the vm)
+*** discrete bits of work
+*** composed through a common interface
+*** familiar mechanics
+*** warden, rescue
+
+* sample refactor
+** diaspora user
+** authlogic
+
+* potential issues
+** env can turn into dumping ground
+*** in Rack meant to be request info
+*** used for other things
+*** see warden/devise object reference
+** no guarantees on middleware dependencies
+*** middleware X must run before Z, but Z must come after Y
+*** We're ruby devs, we just fly by the seat of our pants anyway right!!??!
+*** not too difficult to solve, could be applied to Rack
