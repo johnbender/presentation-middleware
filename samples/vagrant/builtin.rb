@@ -1,0 +1,22 @@
+Builder.new do
+  use General::Validate
+  use VM::CheckAccessible
+  use VM::CheckBox
+  use VM::Import
+  use VM::CheckGuestAdditions
+  use VM::MatchMACAddress
+  use VM::CheckAccessible
+  use VM::CleanMachineFolder
+  use VM::ClearForwardedPorts
+  use VM::CheckPortCollisions
+  use VM::ForwardPorts
+  use VM::Provision
+  use VM::NFS
+  use VM::ClearSharedFolders
+  use VM::ShareFolders
+  use VM::HostName
+  use VM::ClearNetworkInterfaces
+  use VM::Network
+  use VM::Customize
+  use VM::Boot
+end

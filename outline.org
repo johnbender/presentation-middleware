@@ -1,6 +1,4 @@
 * intro
-* Alternate, accurate title
-** Middleware, as envisioned by pep 333, for general purpose class de-bloating
 * motivation
 ** bloated classes
 *** Rails User class
@@ -8,12 +6,15 @@
 **** sub-objects don't always map to tables
 ** solutions
 *** buncho mixins (authlogic)
+**** https://github.com/binarylogic/authlogic/blob/master/lib/authlogic/session/base.rb
 *** object composition
 **** ivar per action
 *** composition doesn't cover all bases
 **** ordered actions as objects
 **** composed object dependencies
 * rack review
+** Alternate, accurate title
+*** Middleware, as envisioned by pep 333, for general purpose class de-bloating
 ** pep 333
 ** simple stdout log rack
 ** env
@@ -42,9 +43,17 @@
 *** discrete bits of work
 *** composed through a common interface
 *** familiar mechanics
+*** more general solution (call is invoked by "parent" middleware)
 *** warden, rescue
+**** $.ajax({
+       type: 'POST',
+       url: "/foo",
+       success: fireTheMissles,
+       error: fireTheMissles
+     });
 
 * sample refactor
+** ignore machinary due to time constraint
 ** diaspora user
 ** authlogic
 
