@@ -19,9 +19,6 @@ johnbender.github.com/presentation-middleware
 # Yet Another Pattern
 
 !SLIDE
-### YMMV
-
-!SLIDE
 ### Class Bloat
 Rails User
 
@@ -80,7 +77,10 @@ Rails User
 ### (♥_♥)
 
 !SLIDE
-# Rack
+## YMMV
+
+!SLIDE
+# Rack Middleware
 
 !SLIDE
 ### Using middleware, as envisioned in PEP 333, to debloat your classes, get a raise, and find the significant other of your dreams
