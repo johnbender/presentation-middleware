@@ -27,6 +27,10 @@ body {
   font-size: 3em;
 }
 
+.link p {
+  font-size: 2.5em;
+}
+
 .bullets.grid ul {
   font-size: 3em;
   margin-left: 40px;
@@ -38,6 +42,16 @@ body {
 
 .content h1, .content h2 {
   font-size: 5.5em;
+}
+
+.content code {
+  font-size: 1.1em;
+  font-family: 'monospace';
+}
+
+.content code.large {
+  font-size: 0.9em;
+  font-family: 'monospace';
 }
 
 .content h1 {
@@ -147,7 +161,7 @@ span.monospace {
 .content > pre b, .highlight b, b > .function-name, b > .string, b > .type, b > .constant {
   background: #D65600;
   color: white !important;
-  outline: .20em solid #D65600;
+  outline: .18em solid #D65600;
 }
 
 .content > pre b.normal, .highlight b.normal, b.normal > .function-name, b.normal > .string {
@@ -225,4 +239,12 @@ b .variable-name {
   margin: auto;
   text-align: center;
   font-weight: normal;
+}
+
+.right-arrow {
+  position: absolute;
+  top: 80px;
+  right: 25px;
+  font-size: 16em;
+  color: purple;
 }

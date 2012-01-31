@@ -77,14 +77,11 @@
 </div>
 
 <div id="slides" class="offscreen" style="display:none;">
-<div class="slide" data-transition="none"><div class="content" ref="one/01_slide/1">
-<p>(&#x273F; &#x2665;&#x203F;&#x2665;)
-&#x3B5;(&#xB4;&#xFB41;&#xFE35;&#xFB41;`)&#x437;</p></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/2">
+<div class="slide" data-transition="none"><div class="content link" ref="one/01_slide/1">
 <h1>Middleware: <br/> A General Abstraction</h1>
 
 <p>johnbender.github.com/presentation-middleware</p></div>
-</div><div class="slide" data-transition="none"><div class="content bullets mono-bullets" ref="one/01_slide/3">
+</div><div class="slide" data-transition="none"><div class="content bullets mono-bullets" ref="one/01_slide/2">
 <h2>me</h2>
 
 <ul>
@@ -93,19 +90,17 @@
 <li>github.com/johnbender</li>
 </ul>
 </div>
-</div><div class="slide" data-transition="none"><div class="content center" ref="one/01_slide/4">
+</div><div class="slide" data-transition="none"><div class="content center" ref="one/01_slide/3">
 <p><img src="./file/one/adobe.jpg" style="max-height: 600px"/></p></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/5">
-<h1>Yet Another Pattern</h1></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/6">
-<h3>Class Bloat</h3>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/4">
+<h1>Large Classes</h1>
 
-<p>Rails User</p></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/7">
-<h2>Existing Solutions</h2></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/8">
-<h3>Bunch'o'Mixins</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/9">
+<h3>&#x3B5;(&#xB4;&#xFB41;&#xFE35;&#xFB41;`)&#x437;</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/5">
+<h2>Mixin All The Things</h2>
+
+<h3>(&#x256F;&#xB0;&#x25A1;&#xB0;)&#x256F;&#xFE35; &#x253B;&#x2501;&#x253B;</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/6">
 <pre class="xxlarge">
 <span class="keyword">module</span> <span class="type">Authlogic</span>
   <span class="keyword">module</span> <span class="type">Session</span> <span class="comment-delimiter"># </span><span class="comment">:nodoc:
@@ -148,23 +143,96 @@
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/10">
-<h3>(&#x256F;&#xB0;&#x25A1;&#xB0;&#xFF09;&#x256F;&#xFE35; &#x253B;&#x2501;&#x253B;</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/11">
-<h3>Object Composition</h3>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/7">
+<h2>Object Composition</h2>
 
-<h3>(&#x2665;_&#x2665;)</h3></div>
+<h3>(&#x273F; &#x2665;&#x203F;&#x2665;)</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/8">
+<pre>
+<span class="keyword">class</span> <span class="type">Lamp</span>
+  <span class="keyword">def</span> <span class="function-name">initialize</span>(bulb_age)
+    <span class="variable-name">@bulb_age</span> = bulb_age
+  <span class="keyword">end</span>
+
+  <span class="keyword">def</span> <span class="function-name">needs_maintenance?</span>
+    <span class="variable-name">@bulb_age</span> &gt; 2
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/9">
+<pre>
+<span class="keyword">class</span> <span class="type">Lamp</span>
+  <span class="keyword">def</span> <span class="function-name">initialize</span>(bulb_age)
+    <span class="variable-name">@bulb_age</span> = bulb_age
+  <span class="keyword">end</span>
+
+  <span class="keyword">def</span> <span class="function-name">needs_maintenance?</span>
+    <b><span class="variable-name">@bulb_age</span> &gt; 2</b>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/10">
+<pre>
+<span class="keyword">class</span> <span class="type">Lamp</span>
+  <span class="keyword">def</span> <span class="function-name">initialize</span>(bulb)
+    <span class="variable-name">@bulb</span> = bulb
+  <span class="keyword">end</span>
+
+  <span class="keyword">def</span> <span class="function-name">needs_maintenance?</span>
+    <b><span class="variable-name">@bulb</span>.needs_maintenance?</b>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/11">
+<h2>Middlethangs</h2></div>
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/12">
-<h2>YMMV</h2></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/13">
 <h1>Rack Middleware</h1></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/14">
-<h3>Using middleware, as envisioned in PEP 333, to debloat your classes, get a raise, and find the significant other of your dreams</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/15">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/13">
 <h3>Python Web Server Gateway Interface v1.0</h3>
 
 <p>python.org/dev/peps/pep-0333/</p></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/14">
+<h2>Request Processing</h2></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/15">
+<pre>
+app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
+   use <span class="type">Middleware</span>::<span class="type">Example</span>
+   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
+   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
+<span class="keyword">end</span></pre>
+
+
+</div>
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/16">
+<pre>
+app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
+   use <span class="type">Middleware</span>::<span class="type">Example</span>
+   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
+   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
+<span class="keyword">end</span></pre>
+
+
+<p><span class="right-arrow">&#x2193;</span></p></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/17">
+<pre>
+app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
+   <b>use <span class="type">Middleware</span>::<span class="type">Example</span></b>
+   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
+   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
+<span class="keyword">end</span></pre>
+
+
+<p><span class="right-arrow">&#x2193;</span></p></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/18">
 <pre class="large">
 <span class="keyword">module</span> <span class="type">Middleware</span>
   <span class="keyword">class</span> <span class="type">Example</span>
@@ -187,7 +255,7 @@
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/17">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/19">
 <pre class="large">
 <span class="keyword">module</span> <span class="type">Middleware</span>
   <span class="keyword">class</span> <span class="type">Example</span>
@@ -210,7 +278,7 @@
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/18">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/20">
 <pre class="large">
 <span class="keyword">module</span> <span class="type">Middleware</span>
   <span class="keyword">class</span> <span class="type">Example</span>
@@ -233,45 +301,7 @@
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/19">
-<pre class="">
-<span class="keyword">def</span> <span class="function-name">call</span>(env)
-  <span class="variable-name">@app</span>.call(env)
-<span class="keyword">end</span>
-</pre>
-
-
-</div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/20">
-<pre>
-app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
-   use <span class="type">Middleware</span>::<span class="type">Example</span>
-   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
-   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
-<span class="keyword">end</span></pre>
-
-
-</div>
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/21">
-<pre>
-app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
-   <b>use <span class="type">Middleware</span>::<span class="type">Example</span></b>
-   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
-   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
-<span class="keyword">end</span></pre>
-
-
-</div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/22">
-<pre>
-<span class="keyword">def</span> <span class="function-name">initialize</span>(app)
-  <b><span class="variable-name">@app</span> = app</b>
-<span class="keyword">end</span>
-</pre>
-
-
-</div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/23">
 <pre>
 app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
    use <span class="type">Middleware</span>::<span class="type">Example</span>
@@ -281,22 +311,111 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/22">
+<pre>
+<span class="type">Rack</span>::<span class="type">Handler</span>::<span class="type">Puma</span>.run(app)
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/23">
+<pre>
+app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
+   use <span class="type">Middleware</span>::<span class="type">Example</span>
+   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
+   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
+<span class="keyword">end</span></pre>
+
+
+<p><span class="right-arrow">&#x2193;</span></p></div>
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/24">
-<pre class="">
-<span class="keyword">def</span> <span class="function-name">call</span>(env)
-  <b><span class="variable-name">@app</span>.call(env)</b>
+<pre>
+app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
+   <b>use <span class="type">Middleware</span>::<span class="type">Example</span></b>
+   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
+   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
+<span class="keyword">end</span></pre>
+
+
+<p><span class="right-arrow">&#x2193;</span></p></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/25">
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Middleware</span>
+  <span class="keyword">class</span> <span class="type">Example</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <b><span class="function-name">call</span>(env)</b>
+      <span class="comment-delimiter"># </span><span class="comment">do something before the next middleware
+</span>      <span class="comment-delimiter"># </span><span class="comment">possibly modify the environment
+</span>
+      <span class="comment-delimiter"># </span><span class="comment">run the next middleware in the stack
+</span>      <span class="variable-name">@app</span>.call(env)
+
+      <span class="comment-delimiter"># </span><span class="comment">do something after the next middleware
+</span>    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 <span class="keyword">end</span>
 </pre>
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/25">
-<h3>Endpoint?</h3></div>
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/26">
-<h1>Vagrant</h1></div>
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Middleware</span>
+  <span class="keyword">class</span> <span class="type">Example</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(<b>env</b>)
+      <span class="comment-delimiter"># </span><span class="comment">do something before the next middleware
+</span>      <span class="comment-delimiter"># </span><span class="comment">possibly modify the environment
+</span>
+      <span class="comment-delimiter"># </span><span class="comment">run the next middleware in the stack
+</span>      <span class="variable-name">@app</span>.call(<b>env</b>)
+
+      <span class="comment-delimiter"># </span><span class="comment">do something after the next middleware
+</span>    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/27">
-<h3>vm.do_something</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/28">
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Middleware</span>
+  <span class="keyword">class</span> <span class="type">Example</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="comment-delimiter"># </span><span class="comment">do something before the next middleware
+</span>      <span class="comment-delimiter"># </span><span class="comment">possibly modify the environment
+</span>
+      <span class="comment-delimiter"># </span><span class="comment">run the next middleware in the stack
+</span>      <b><span class="variable-name">@app</span>.call(env)</b>
+
+      <span class="comment-delimiter"># </span><span class="comment">do something after the next middleware
+</span>    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content link" ref="one/01_slide/28">
+<h1>Vagrant</h1>
+
+<p>vagrantup.com</p></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/29">
+<h2>Virtual Machines</h2></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/30">
+<h3><code>$ vagrant up</code></h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/31">
 <pre class="xlarge">
     <span class="type">Builder</span>.new <span class="keyword">do</span>
       use <span class="type">General</span>::<span class="type">Validate</span>
@@ -324,101 +443,13 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/29">
-<h3>VM Dumping Ground</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/30">
-<h2>First Try</h2></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/31">
-<h3>Actions</h3>
-
-<h3>' &#x33F;'\&#x335;&#x347;&#x33F;&#x33F;\&#x437;=(&#x25D5;_&#x25D5;)=&#x3B5;/&#x335;&#x347;&#x33F;&#x33F;/'&#x33F;'&#x33F; &#x33F;</h3></div>
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/32">
-<pre class="large">
-<span class="keyword">module</span> <span class="type">Vagrant</span>
-  <span class="keyword">module</span> <span class="type">Actions</span>
-    <span class="keyword">module</span> <span class="type">VM</span>
-      <span class="keyword">class</span> <span class="type">Halt</span> &lt; <span class="type">Base</span>
-        <span class="keyword">def</span> <span class="function-name">execute!</span>
-          <span class="keyword">unless</span> <span class="variable-name">@runner</span>.vm.running?
-            <span class="keyword">raise</span> <span class="type">ActionException</span>.new(<span class="string">" ... "</span>)
-          <span class="keyword">end</span>
+<h2>Virtual Machine Class</h2>
 
-          logger.info <span class="string">"Forcing shutdown of VM..."</span>
-          <span class="variable-name">@runner</span>.vm.stop(<span class="variable-name">true</span>)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-</pre>
-
-
-</div>
+<h3>&#x3B5;(&#xB4;&#xFB41;&#xFE35;&#xFB41;`)&#x437;</h3></div>
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/33">
-<pre class="large">
-<span class="keyword">module</span> <span class="type">Vagrant</span>
-  <span class="keyword">module</span> <span class="type">Actions</span>
-    <span class="keyword">module</span> <span class="type">VM</span>
-      <span class="keyword">class</span> <span class="type">Halt</span> &lt; <span class="type">Base</span>
-        <span class="keyword">def</span> <b><span class="function-name">execute!</span></b>
-          <span class="keyword">unless</span> <span class="variable-name">@runner</span>.vm.running?
-            <span class="keyword">raise</span> <span class="type">ActionException</span>.new(<span class="string">" ... "</span>)
-          <span class="keyword">end</span>
-
-          logger.info <span class="string">"Forcing shutdown of VM..."</span>
-          <span class="variable-name">@runner</span>.vm.stop(<span class="variable-name">true</span>)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-</pre>
-
-
-</div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/34">
-<pre class="large">
-<span class="keyword">module</span> <span class="type">Vagrant</span>
-  <span class="keyword">module</span> <span class="type">Actions</span>
-    <span class="keyword">module</span> <span class="type">VM</span>
-      <span class="keyword">class</span> <span class="type">Halt</span> &lt; <span class="type">Base</span>
-        <span class="keyword">def</span> <span class="function-name">execute!</span>
-          <span class="keyword">unless</span> <b><span class="variable-name">@runner</span></b>.vm.running?
-            <span class="keyword">raise</span> <span class="type">ActionException</span>.new(<span class="string">" ... "</span>)
-          <span class="keyword">end</span>
-
-          logger.info <span class="string">"Forcing shutdown of VM..."</span>
-          <b><span class="variable-name">@runner</span></b>.vm.stop(<span class="variable-name">true</span>)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-</pre>
-
-
-</div>
-</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/35">
-<h3>Wins</h3>
-
-<ul>
-<li>testing</li>
-<li>reading</li>
-<li>organization</li>
-</ul>
-</div>
-</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/36">
-<h3>Issues</h3>
-
-<ul>
-<li>dependencies</li>
-<li>three phases</li>
-<li>less general</li>
-</ul>
-</div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/37">
 <h2>Middleware</h2></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/38">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/34">
 <pre class="large">
 <span class="keyword">module</span> <span class="type">Vagrant</span>
   <span class="keyword">module</span> <span class="type">Action</span>
@@ -440,7 +471,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/39">
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/35">
 <h3>Wins</h3>
 
 <ul>
@@ -449,7 +480,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 <li>recover</li>
 </ul>
 </div>
-</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/40">
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/36">
 <h3>Issues</h3>
 
 <ul>
@@ -457,11 +488,9 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 <li>env dumping ground</li>
 </ul>
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/41">
-<h1>Fix All the Things</h1></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/42">
-<h2>Diaspora User</h2></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/43">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/37">
+<h1>Diaspora User</h1></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/38">
 <pre class="extreme">
 <span class="keyword">class</span> <span class="type">User</span> &lt; <span class="type">ActiveRecord</span>::<span class="type">Base</span>
   include <span class="type">Diaspora</span>::<span class="type">UserModules</span>
@@ -505,7 +534,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/44">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/39">
 <pre class="extreme">
   <span class="keyword">def</span> <span class="function-name">self.create_from_invitation!</span>(invitation)
     user = <span class="type">User</span>.new
@@ -554,7 +583,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/45">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/40">
 <pre class="extreme">
 
   <span class="keyword">def</span> <span class="function-name">set_current_language</span>
@@ -604,7 +633,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/46">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/41">
 <pre class="extreme">
 
   <span class="keyword">def</span> <span class="function-name">add_contact_to_aspect</span>(contact, aspect)
@@ -653,7 +682,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/47">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/42">
 <pre class="extreme">
 
   <span class="keyword">def</span> <span class="function-name">aspects_from_ids</span>(aspect_ids)
@@ -702,7 +731,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/48">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/43">
 <pre class="extreme">
 
   <span class="comment-delimiter"># </span><span class="comment">Get the user's like of a post, if there is one.
@@ -748,15 +777,18 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content center" ref="one/01_slide/49">
+</div><div class="slide" data-transition="none"><div class="content center" ref="one/01_slide/44">
 <p><img src="./file/one/zord.jpg" style="max-height: 600px"/></p></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/50">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/45">
 <h3>500+ lines</h3>
 
 <h3>&#x3B5;(&#xB4;&#xFB41;&#xFE35;&#xFB41;`)&#x437;</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/51">
-<h3>accept_invitation!</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/52">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/46">
+<h3><code class="large">accept_invitation!</code></h3>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/47">
 <pre class="xxlarge">
   <span class="keyword">def</span> <span class="function-name">accept_invitation!</span>(opts = {})
     log_hash = {
@@ -796,7 +828,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/53">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/48">
 <pre class="xxlarge">
   <span class="keyword">def</span> <span class="function-name">accept_invitation!</span>(opts = {})
     log_hash = {
@@ -836,7 +868,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/54">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/49">
 <pre class="large">
   <span class="keyword">def</span> <span class="function-name">setup</span>(opts)
     <span class="variable-name">self</span>.username = opts[<span class="constant">:username</span>]
@@ -855,9 +887,9 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/55">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/50">
 <h3>Middlewareified</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/56">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/51">
 <pre class="xxlarge">
         <span class="keyword">def</span> <span class="function-name">call</span>(env)
           <span class="variable-name">@user</span> = env[<span class="constant">:user</span>]
@@ -900,7 +932,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/57">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/52">
 <pre class="xxlarge">
         <span class="keyword">def</span> <span class="function-name">call</span>(env)
           <b><span class="variable-name">@user</span> = env[<span class="constant">:user</span>]</b>
@@ -943,7 +975,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/58">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/53">
 <pre class="xxlarge">
         <span class="keyword">def</span> <span class="function-name">call</span>(env)
           <span class="variable-name">@user</span> = env[<span class="constant">:user</span>]
@@ -984,7 +1016,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
         <span class="keyword">end</span>
 </pre>
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/59">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/54">
 <pre class="xxlarge">
         <span class="keyword">def</span> <span class="function-name">call</span>(env)
           <span class="variable-name">@user</span> = env[<span class="constant">:user</span>]
@@ -1027,7 +1059,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/60">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/55">
 <pre class="large">
     <span class="keyword">def</span> <span class="function-name">setup</span>(opts)
       user.username    = opts[<span class="constant">:username</span>]
@@ -1045,7 +1077,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/61">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/56">
 <pre class="large">
     <span class="keyword">def</span> <span class="function-name">setup</span>(opts)
       <b>user</b>.username    = opts[<span class="constant">:username</span>]
@@ -1063,7 +1095,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/62">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/57">
 <pre style="font-size: 1.9em">
 <span class="keyword">class</span> <span class="type">InvitationsController</span> &lt; <span class="type">Devise</span>::<span class="type">InvitationsController</span>
   <span class="keyword">def</span> <span class="function-name">update</span>
@@ -1080,7 +1112,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/63">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/58">
 <pre style="font-size: 2em">
 <span class="keyword">class</span> <span class="type">User</span> &lt; <span class="type">ActiveRecord</span>::<span class="type">Base</span>
   <span class="keyword">def</span> <span class="function-name">accept_invitation!</span>(opts = {})
@@ -1096,9 +1128,9 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/64">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/59">
 <h1>Wrap Up</h1></div>
-</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/65">
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/60">
 <h3>Delegates?</h3>
 
 <ul>
@@ -1107,11 +1139,11 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 <li>entry point ambiguity</li>
 </ul>
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/66">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/61">
 <h2>Real Wins</h2></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/67">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/62">
 <h3>Serial Method Invocation</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/68">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/63">
 <pre>
     <span class="keyword">def</span> <span class="function-name">foo</span>
       bar(1)
@@ -1122,7 +1154,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/69">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/64">
 <pre>
     stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
       use <span class="type">Bar</span>
@@ -1135,9 +1167,9 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/70">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/65">
 <h3>Function Composition</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/71">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/66">
 <pre>
     <span class="keyword">def</span> <span class="function-name">foo</span>
       bar(baz(bak(<span class="string">"fing"</span>)))
@@ -1146,7 +1178,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/72">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/67">
 <pre>
     stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
       use <span class="type">Bak</span>
@@ -1159,7 +1191,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/73">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/68">
 <pre>
     stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
       <b>use <span class="type">Bak</span></b>
@@ -1172,7 +1204,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content bullets mono-bullets thanks" ref="one/01_slide/74">
+</div><div class="slide" data-transition="none"><div class="content bullets mono-bullets thanks" ref="one/01_slide/69">
 <h2>Thanks!</h2>
 
 <ul>
