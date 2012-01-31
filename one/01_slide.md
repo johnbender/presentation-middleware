@@ -1,7 +1,4 @@
-(✿ ♥‿♥)
-ε(´סּ︵סּ`)з
-
-!SLIDE
+!SLIDE link
 # Middleware: <br/> A General Abstraction
 
 johnbender.github.com/presentation-middleware
@@ -16,17 +13,12 @@ johnbender.github.com/presentation-middleware
 <img src="adobe.jpg" style="max-height: 600px"></img>
 
 !SLIDE
-# Yet Another Pattern
+# Large Classes
+### ε(´סּ︵סּ`)з
 
 !SLIDE
-### Class Bloat
-Rails User
-
-!SLIDE
-## Existing Solutions
-
-!SLIDE
-### Bunch'o'Mixins
+## Mixin All The Things
+### (╯°□°)╯︵ ┻━┻
 
 !SLIDE
 <pre class="xxlarge">
@@ -70,25 +62,88 @@ Rails User
 </pre>
 
 !SLIDE
-### (╯°□°）╯︵ ┻━┻
+## Object Composition
+### (✿ ♥‿♥)
 
 !SLIDE
-### Object Composition
-### (♥_♥)
+<pre>
+<span class="keyword">class</span> <span class="type">Lamp</span>
+  <span class="keyword">def</span> <span class="function-name">initialize</span>(bulb_age)
+    <span class="variable-name">@bulb_age</span> = bulb_age
+  <span class="keyword">end</span>
+
+  <span class="keyword">def</span> <span class="function-name">needs_maintenance?</span>
+    <span class="variable-name">@bulb_age</span> &gt; 2
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
 
 !SLIDE
-## YMMV
+<pre>
+<span class="keyword">class</span> <span class="type">Lamp</span>
+  <span class="keyword">def</span> <span class="function-name">initialize</span>(bulb_age)
+    <span class="variable-name">@bulb_age</span> = bulb_age
+  <span class="keyword">end</span>
+
+  <span class="keyword">def</span> <span class="function-name">needs_maintenance?</span>
+    <b><span class="variable-name">@bulb_age</span> &gt; 2</b>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre>
+<span class="keyword">class</span> <span class="type">Lamp</span>
+  <span class="keyword">def</span> <span class="function-name">initialize</span>(bulb)
+    <span class="variable-name">@bulb</span> = bulb
+  <span class="keyword">end</span>
+
+  <span class="keyword">def</span> <span class="function-name">needs_maintenance?</span>
+    <b><span class="variable-name">@bulb</span>.needs_maintenance?</b>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+!SLIDE
+## Middlethangs
 
 !SLIDE
 # Rack Middleware
 
 !SLIDE
-### Using middleware, as envisioned in PEP 333, to debloat your classes, get a raise, and find the significant other of your dreams
-
-!SLIDE
 ### Python Web Server Gateway Interface v1.0
 
 python.org/dev/peps/pep-0333/
+
+!SLIDE
+## Request Processing
+
+!SLIDE
+<pre>
+app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
+   use <span class="type">Middleware</span>::<span class="type">Example</span>
+   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
+   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
+<span class="keyword">end</span></pre>
+
+!SLIDE
+<pre>
+app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
+   use <span class="type">Middleware</span>::<span class="type">Example</span>
+   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
+   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
+<span class="keyword">end</span></pre>
+<span class="right-arrow">↓</span>
+
+!SLIDE
+<pre>
+app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
+   <b>use <span class="type">Middleware</span>::<span class="type">Example</span></b>
+   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
+   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
+<span class="keyword">end</span></pre>
+<span class="right-arrow">↓</span>
 
 !SLIDE
 <pre class="large">
@@ -153,37 +208,6 @@ python.org/dev/peps/pep-0333/
 <span class="keyword">end</span>
 </pre>
 
-
-!SLIDE
-<pre class="">
-<span class="keyword">def</span> <span class="function-name">call</span>(env)
-  <span class="variable-name">@app</span>.call(env)
-<span class="keyword">end</span>
-</pre>
-
-!SLIDE
-<pre>
-app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
-   use <span class="type">Middleware</span>::<span class="type">Example</span>
-   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
-   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
-<span class="keyword">end</span></pre>
-
-!SLIDE
-<pre>
-app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
-   <b>use <span class="type">Middleware</span>::<span class="type">Example</span></b>
-   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
-   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
-<span class="keyword">end</span></pre>
-
-!SLIDE
-<pre>
-<span class="keyword">def</span> <span class="function-name">initialize</span>(app)
-  <b><span class="variable-name">@app</span> = app</b>
-<span class="keyword">end</span>
-</pre>
-
 !SLIDE
 <pre>
 app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
@@ -192,21 +216,104 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
    use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
 <span class="keyword">end</span></pre>
 
+
 !SLIDE
-<pre class="">
-<span class="keyword">def</span> <span class="function-name">call</span>(env)
-  <b><span class="variable-name">@app</span>.call(env)</b>
-<span class="keyword">end</span>
+<pre>
+<span class="type">Rack</span>::<span class="type">Handler</span>::<span class="type">Puma</span>.run(app)
 </pre>
 
 !SLIDE
-### Endpoint?
+<pre>
+app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
+   use <span class="type">Middleware</span>::<span class="type">Example</span>
+   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
+   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
+<span class="keyword">end</span></pre>
+<span class="right-arrow">↓</span>
 
 !SLIDE
+<pre>
+app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <span class="keyword">do</span>
+   <b>use <span class="type">Middleware</span>::<span class="type">Example</span></b>
+   use <span class="type">Rack</span>::<span class="type">CommonLogger</span>
+   use <span class="type">Rack</span>::<span class="type">ShowExceptions</span>
+<span class="keyword">end</span></pre>
+<span class="right-arrow">↓</span>
+
+!SLIDE
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Middleware</span>
+  <span class="keyword">class</span> <span class="type">Example</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <b><span class="function-name">call</span>(env)</b>
+      <span class="comment-delimiter"># </span><span class="comment">do something before the next middleware
+</span>      <span class="comment-delimiter"># </span><span class="comment">possibly modify the environment
+</span>
+      <span class="comment-delimiter"># </span><span class="comment">run the next middleware in the stack
+</span>      <span class="variable-name">@app</span>.call(env)
+
+      <span class="comment-delimiter"># </span><span class="comment">do something after the next middleware
+</span>    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+!SLIDE
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Middleware</span>
+  <span class="keyword">class</span> <span class="type">Example</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(<b>env</b>)
+      <span class="comment-delimiter"># </span><span class="comment">do something before the next middleware
+</span>      <span class="comment-delimiter"># </span><span class="comment">possibly modify the environment
+</span>
+      <span class="comment-delimiter"># </span><span class="comment">run the next middleware in the stack
+</span>      <span class="variable-name">@app</span>.call(<b>env</b>)
+
+      <span class="comment-delimiter"># </span><span class="comment">do something after the next middleware
+</span>    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+!SLIDE
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Middleware</span>
+  <span class="keyword">class</span> <span class="type">Example</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="comment-delimiter"># </span><span class="comment">do something before the next middleware
+</span>      <span class="comment-delimiter"># </span><span class="comment">possibly modify the environment
+</span>
+      <span class="comment-delimiter"># </span><span class="comment">run the next middleware in the stack
+</span>      <b><span class="variable-name">@app</span>.call(env)</b>
+
+      <span class="comment-delimiter"># </span><span class="comment">do something after the next middleware
+</span>    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE link
 # Vagrant
+vagrantup.com
 
 !SLIDE
-### vm.do_something
+## Virtual Machines
+
+!SLIDE
+### `$ vagrant up`
 
 !SLIDE
 <pre class="xlarge">
@@ -235,86 +342,8 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 </pre>
 
 !SLIDE
-### VM Dumping Ground
-
-!SLIDE
-## First Try
-
-!SLIDE
-### Actions
-### ' ̿'\̵͇̿̿\з=(◕_◕)=ε/̵͇̿̿/'̿'̿ ̿
-
-!SLIDE
-<pre class="large">
-<span class="keyword">module</span> <span class="type">Vagrant</span>
-  <span class="keyword">module</span> <span class="type">Actions</span>
-    <span class="keyword">module</span> <span class="type">VM</span>
-      <span class="keyword">class</span> <span class="type">Halt</span> &lt; <span class="type">Base</span>
-        <span class="keyword">def</span> <span class="function-name">execute!</span>
-          <span class="keyword">unless</span> <span class="variable-name">@runner</span>.vm.running?
-            <span class="keyword">raise</span> <span class="type">ActionException</span>.new(<span class="string">" ... "</span>)
-          <span class="keyword">end</span>
-
-          logger.info <span class="string">"Forcing shutdown of VM..."</span>
-          <span class="variable-name">@runner</span>.vm.stop(<span class="variable-name">true</span>)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-</pre>
-
-!SLIDE
-<pre class="large">
-<span class="keyword">module</span> <span class="type">Vagrant</span>
-  <span class="keyword">module</span> <span class="type">Actions</span>
-    <span class="keyword">module</span> <span class="type">VM</span>
-      <span class="keyword">class</span> <span class="type">Halt</span> &lt; <span class="type">Base</span>
-        <span class="keyword">def</span> <b><span class="function-name">execute!</span></b>
-          <span class="keyword">unless</span> <span class="variable-name">@runner</span>.vm.running?
-            <span class="keyword">raise</span> <span class="type">ActionException</span>.new(<span class="string">" ... "</span>)
-          <span class="keyword">end</span>
-
-          logger.info <span class="string">"Forcing shutdown of VM..."</span>
-          <span class="variable-name">@runner</span>.vm.stop(<span class="variable-name">true</span>)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-</pre>
-
-!SLIDE
-<pre class="large">
-<span class="keyword">module</span> <span class="type">Vagrant</span>
-  <span class="keyword">module</span> <span class="type">Actions</span>
-    <span class="keyword">module</span> <span class="type">VM</span>
-      <span class="keyword">class</span> <span class="type">Halt</span> &lt; <span class="type">Base</span>
-        <span class="keyword">def</span> <span class="function-name">execute!</span>
-          <span class="keyword">unless</span> <b><span class="variable-name">@runner</span></b>.vm.running?
-            <span class="keyword">raise</span> <span class="type">ActionException</span>.new(<span class="string">" ... "</span>)
-          <span class="keyword">end</span>
-
-          logger.info <span class="string">"Forcing shutdown of VM..."</span>
-          <b><span class="variable-name">@runner</span></b>.vm.stop(<span class="variable-name">true</span>)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-</pre>
-
-!SLIDE bullets
-### Wins
-* testing
-* reading
-* organization
-
-!SLIDE bullets
-### Issues
-* dependencies
-* three phases
-* less general
+## Virtual Machine Class
+### ε(´סּ︵סּ`)з
 
 !SLIDE
 ## Middleware
@@ -351,10 +380,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 * env dumping ground
 
 !SLIDE
-# Fix All the Things
-
-!SLIDE
-## Diaspora User
+# Diaspora User
 
 !SLIDE
 <pre class="extreme">
@@ -639,7 +665,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 ### ε(´סּ︵סּ`)з
 
 !SLIDE
-### accept_invitation!
+<h3><code class="large">accept_invitation!</code></h3>
 
 !SLIDE
 <pre class="xxlarge">
