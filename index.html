@@ -99,7 +99,7 @@
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/5">
 <h2>Mixin All The Things</h2>
 
-<h3>(&#x256F;&#xB0;&#x25A1;&#xB0;)&#x256F;&#xFE35; &#x253B;&#x2501;&#x253B;</h3></div>
+<h3>(&#xFF89; `&#x414;&#xB4;)&#xFF89; &#xFE35; &#x253B;&#x2501;&#x253B;</h3></div>
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/6">
 <pre class="xxlarge">
 <span class="keyword">module</span> <span class="type">Authlogic</span>
@@ -196,7 +196,7 @@
 <h2>Middlethangs</h2></div>
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/12">
 <h1>Rack Middleware</h1></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/13">
+</div><div class="slide" data-transition="none"><div class="content link" ref="one/01_slide/13">
 <h3>Python Web Server Gateway Interface v1.0</h3>
 
 <p>python.org/dev/peps/pep-0333/</p></div>
@@ -407,15 +407,244 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content link" ref="one/01_slide/28">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/28">
+<h2>Endpoints</h2></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/29">
+<p><span class="question">&#x61F;</span></p></div>
+</div><div class="slide" data-transition="none"><div class="content link" ref="one/01_slide/30">
 <h1>Vagrant</h1>
 
 <p>vagrantup.com</p></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/29">
-<h2>Virtual Machines</h2></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/30">
-<h3><code>$ vagrant up</code></h3></div>
 </div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/31">
+<h2>Virtual Machines</h2></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/32">
+<h3><code>$ vagrant suspend</code></h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/33">
+<pre>
+<span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">General</span>::<span class="type">Validate</span>
+  use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+  use <span class="type">VM</span>::<span class="type">Suspend</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/34">
+<pre>
+<span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">General</span>::<span class="type">Validate</span>
+  use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+  use <span class="type">VM</span>::<span class="type">Suspend</span>
+<span class="keyword">end</span>
+</pre>
+
+
+<p><span class="right-arrow">&#x2193;</span></p></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/35">
+<pre>
+<span class="type">Builder</span>.new <span class="keyword">do</span>
+  <b>use <span class="type">General</span>::<span class="type">Validate</span></b>
+  use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+  use <span class="type">VM</span>::<span class="type">Suspend</span>
+<span class="keyword">end</span>
+</pre>
+
+
+<p><span class="right-arrow">&#x2193;</span></p></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/36">
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">General</span>
+  <span class="keyword">class</span> <span class="type">Validate</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span>, <span class="variable-name">@env</span> = app, env
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <b><span class="function-name">call</span>(env)</b>
+      <span class="keyword">if</span> !<span class="variable-name">@env</span>[<span class="string">"validate"</span>]
+        <span class="variable-name">@env</span>[<span class="constant">:vm</span>].config.validate!(<span class="variable-name">@env</span>[<span class="constant">:vm</span>].env)
+      <span class="keyword">end</span>
+
+      <span class="variable-name">@app</span>.call(<span class="variable-name">@env</span>)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/37">
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">General</span>
+  <span class="keyword">class</span> <span class="type">Validate</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span>, <span class="variable-name">@env</span> = app, env
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="keyword">if</span> !<span class="variable-name">@env</span>[<span class="string">"validate"</span>]
+        <b><span class="variable-name">@env</span>[<span class="constant">:vm</span>].config.validate!(<span class="variable-name">@env</span>[<span class="constant">:vm</span>].env)</b>
+      <span class="keyword">end</span>
+
+      <span class="variable-name">@app</span>.call(<span class="variable-name">@env</span>)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/38">
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">General</span>
+  <span class="keyword">class</span> <span class="type">Validate</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span>, <span class="variable-name">@env</span> = app, env
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="keyword">if</span> !<span class="variable-name">@env</span>[<span class="string">"validate"</span>]
+        <span class="variable-name">@env</span>[<span class="constant">:vm</span>].config.validate!(<span class="variable-name">@env</span>[<span class="constant">:vm</span>].env)
+      <span class="keyword">end</span>
+
+      <b><span class="variable-name">@app</span>.call(<span class="variable-name">@env</span>)</b>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/39">
+<pre>
+<span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">General</span>::<span class="type">Validate</span>
+  <b>use <span class="type">VM</span>::<span class="type">CheckAccessible</span></b>
+  use <span class="type">VM</span>::<span class="type">Suspend</span>
+<span class="keyword">end</span>
+</pre>
+
+
+<p><span class="right-arrow">&#x2193;</span></p></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/40">
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">VM</span>
+  <span class="keyword">class</span> <span class="type">CheckAccessible</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <b><span class="function-name">call</span>(env)</b>
+      <span class="keyword">if</span> env[<span class="constant">:vm</span>].state == <span class="constant">:inaccessible</span>
+        <span class="keyword">raise</span> <span class="type">Errors</span>::<span class="type">VMInaccessible</span>
+      <span class="keyword">end</span>
+
+      <span class="variable-name">@app</span>.call(env)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/41">
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">VM</span>
+  <span class="keyword">class</span> <span class="type">CheckAccessible</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="keyword">if</span> env[<span class="constant">:vm</span>].state == <span class="constant">:inaccessible</span>
+        <span class="keyword">raise</span> <span class="type">Errors</span>::<span class="type">VMInaccessible</span>
+      <span class="keyword">end</span>
+
+      <b><span class="variable-name">@app</span>.call(env)</b>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/42">
+<pre>
+<span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">General</span>::<span class="type">Validate</span>
+  use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+  <b>use <span class="type">VM</span>::<span class="type">Suspend</span></b>
+<span class="keyword">end</span>
+</pre>
+
+
+<p><span class="right-arrow">&#x2193;</span></p></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/43">
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">VM</span>
+  <span class="keyword">class</span> <span class="type">Suspend</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <b><span class="function-name">call</span>(env)</b>
+      <span class="keyword">if</span> env[<span class="constant">:vm</span>].state == <span class="constant">:running</span>
+        env[<span class="constant">:vm</span>].driver.suspend
+      <span class="keyword">end</span>
+
+      <span class="variable-name">@app</span>.call(env)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/44">
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">VM</span>
+  <span class="keyword">class</span> <span class="type">Suspend</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="keyword">if</span> env[<span class="constant">:vm</span>].state == <span class="constant">:running</span>
+        <b>env[<span class="constant">:vm</span>].driver.suspend</b>
+      <span class="keyword">end</span>
+
+      <span class="variable-name">@app</span>.call(env)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/45">
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">VM</span>
+  <span class="keyword">class</span> <span class="type">Suspend</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="keyword">if</span> env[<span class="constant">:vm</span>].state == <span class="constant">:running</span>
+        env[<span class="constant">:vm</span>].driver.suspend
+      <span class="keyword">end</span>
+
+      <b><span class="variable-name">@app</span>.call(env)</b>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/46">
+<h3><code>$ vagrant up</code></h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/47">
 <pre class="xlarge">
     <span class="type">Builder</span>.new <span class="keyword">do</span>
       use <span class="type">General</span>::<span class="type">Validate</span>
@@ -443,54 +672,39 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/32">
-<h2>Virtual Machine Class</h2>
-
-<h3>&#x3B5;(&#xB4;&#xFB41;&#xFE35;&#xFB41;`)&#x437;</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/33">
-<h2>Middleware</h2></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/34">
-<pre class="large">
-<span class="keyword">module</span> <span class="type">Vagrant</span>
-  <span class="keyword">module</span> <span class="type">Action</span>
-    <span class="keyword">module</span> <span class="type">VM</span>
-      <span class="keyword">class</span> <span class="type">Halt</span>
-        <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
-          <span class="variable-name">@app</span> = app
-        <span class="keyword">end</span>
-
-        <span class="keyword">def</span> <span class="function-name">call</span>(env)
-          env[<span class="constant">:vm</span>].guest.halt
-          <span class="variable-name">@app</span>.call(env)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/48">
+<pre class="xlarge">
+    <span class="type">Builder</span>.new <span class="keyword">do</span>
+      use <span class="type">General</span>::<span class="type">Validate</span>
+      use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+      use <span class="type">VM</span>::<span class="type">CheckBox</span>
+      use <span class="type">VM</span>::<span class="type">Import</span>
+      use <span class="type">VM</span>::<span class="type">CheckGuestAdditions</span>
+      use <span class="type">VM</span>::<span class="type">MatchMACAddress</span>
+      use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+      use <span class="type">VM</span>::<span class="type">CleanMachineFolder</span>
+      use <span class="type">VM</span>::<span class="type">ClearForwardedPorts</span>
+      use <span class="type">VM</span>::<span class="type">CheckPortCollisions</span>
+      use <span class="type">VM</span>::<span class="type">ForwardPorts</span>
+      use <span class="type">VM</span>::<span class="type">Provision</span>
+      use <span class="type">VM</span>::<span class="type">NFS</span>
+      use <span class="type">VM</span>::<span class="type">ClearSharedFolders</span>
+      use <span class="type">VM</span>::<span class="type">ShareFolders</span>
+      use <span class="type">VM</span>::<span class="type">HostName</span>
+      use <span class="type">VM</span>::<span class="type">ClearNetworkInterfaces</span>
+      use <span class="type">VM</span>::<span class="type">Network</span>
+      use <span class="type">VM</span>::<span class="type">Customize</span>
+      use <span class="type">VM</span>::<span class="type">Boot</span>
     <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
 </pre>
 
 
-</div>
-</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/35">
-<h3>Wins</h3>
-
-<ul>
-<li>more general</li>
-<li>familiar mechanics</li>
-<li>recover</li>
-</ul>
-</div>
-</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/36">
-<h3>Issues</h3>
-
-<ul>
-<li>dependencies</li>
-<li>env dumping ground</li>
-</ul>
-</div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/37">
+<p><span class="gigantor">(&#x256C; &#xCA0;&#x76CA;&#xCA0;)</span></p></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/49">
+<h2>Virtual Machine Class</h2></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/50">
 <h1>Diaspora User</h1></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/38">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/51">
 <pre class="extreme">
 <span class="keyword">class</span> <span class="type">User</span> &lt; <span class="type">ActiveRecord</span>::<span class="type">Base</span>
   include <span class="type">Diaspora</span>::<span class="type">UserModules</span>
@@ -534,7 +748,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/39">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/52">
 <pre class="extreme">
   <span class="keyword">def</span> <span class="function-name">self.create_from_invitation!</span>(invitation)
     user = <span class="type">User</span>.new
@@ -583,7 +797,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/40">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/53">
 <pre class="extreme">
 
   <span class="keyword">def</span> <span class="function-name">set_current_language</span>
@@ -633,7 +847,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/41">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/54">
 <pre class="extreme">
 
   <span class="keyword">def</span> <span class="function-name">add_contact_to_aspect</span>(contact, aspect)
@@ -682,7 +896,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/42">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/55">
 <pre class="extreme">
 
   <span class="keyword">def</span> <span class="function-name">aspects_from_ids</span>(aspect_ids)
@@ -731,7 +945,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/43">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/56">
 <pre class="extreme">
 
   <span class="comment-delimiter"># </span><span class="comment">Get the user's like of a post, if there is one.
@@ -777,18 +991,18 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content center" ref="one/01_slide/44">
+</div><div class="slide" data-transition="none"><div class="content center" ref="one/01_slide/57">
 <p><img src="./file/one/zord.jpg" style="max-height: 600px"/></p></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/45">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/58">
 <h3>500+ lines</h3>
 
 <h3>&#x3B5;(&#xB4;&#xFB41;&#xFE35;&#xFB41;`)&#x437;</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/46">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/59">
 <h3><code class="large">accept_invitation!</code></h3>
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/47">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/60">
 <pre class="xxlarge">
   <span class="keyword">def</span> <span class="function-name">accept_invitation!</span>(opts = {})
     log_hash = {
@@ -828,7 +1042,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/48">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/61">
 <pre class="xxlarge">
   <span class="keyword">def</span> <span class="function-name">accept_invitation!</span>(opts = {})
     log_hash = {
@@ -868,7 +1082,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/49">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/62">
 <pre class="large">
   <span class="keyword">def</span> <span class="function-name">setup</span>(opts)
     <span class="variable-name">self</span>.username = opts[<span class="constant">:username</span>]
@@ -887,9 +1101,9 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/50">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/63">
 <h3>Middlewareified</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/51">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/64">
 <pre class="xxlarge">
         <span class="keyword">def</span> <span class="function-name">call</span>(env)
           <span class="variable-name">@user</span> = env[<span class="constant">:user</span>]
@@ -932,7 +1146,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/52">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/65">
 <pre class="xxlarge">
         <span class="keyword">def</span> <span class="function-name">call</span>(env)
           <b><span class="variable-name">@user</span> = env[<span class="constant">:user</span>]</b>
@@ -975,7 +1189,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/53">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/66">
 <pre class="xxlarge">
         <span class="keyword">def</span> <span class="function-name">call</span>(env)
           <span class="variable-name">@user</span> = env[<span class="constant">:user</span>]
@@ -1016,7 +1230,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
         <span class="keyword">end</span>
 </pre>
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/54">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/67">
 <pre class="xxlarge">
         <span class="keyword">def</span> <span class="function-name">call</span>(env)
           <span class="variable-name">@user</span> = env[<span class="constant">:user</span>]
@@ -1059,7 +1273,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/55">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/68">
 <pre class="large">
     <span class="keyword">def</span> <span class="function-name">setup</span>(opts)
       user.username    = opts[<span class="constant">:username</span>]
@@ -1077,7 +1291,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/56">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/69">
 <pre class="large">
     <span class="keyword">def</span> <span class="function-name">setup</span>(opts)
       <b>user</b>.username    = opts[<span class="constant">:username</span>]
@@ -1095,7 +1309,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/57">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/70">
 <pre style="font-size: 1.9em">
 <span class="keyword">class</span> <span class="type">InvitationsController</span> &lt; <span class="type">Devise</span>::<span class="type">InvitationsController</span>
   <span class="keyword">def</span> <span class="function-name">update</span>
@@ -1112,7 +1326,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/58">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/71">
 <pre style="font-size: 2em">
 <span class="keyword">class</span> <span class="type">User</span> &lt; <span class="type">ActiveRecord</span>::<span class="type">Base</span>
   <span class="keyword">def</span> <span class="function-name">accept_invitation!</span>(opts = {})
@@ -1128,9 +1342,9 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/59">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/72">
 <h1>Wrap Up</h1></div>
-</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/60">
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="one/01_slide/73">
 <h3>Delegates?</h3>
 
 <ul>
@@ -1139,11 +1353,11 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 <li>entry point ambiguity</li>
 </ul>
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/61">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/74">
 <h2>Real Wins</h2></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/62">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/75">
 <h3>Serial Method Invocation</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/63">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/76">
 <pre>
     <span class="keyword">def</span> <span class="function-name">foo</span>
       bar(1)
@@ -1154,7 +1368,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/64">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/77">
 <pre>
     stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
       use <span class="type">Bar</span>
@@ -1167,9 +1381,9 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/65">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/78">
 <h3>Function Composition</h3></div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/66">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/79">
 <pre>
     <span class="keyword">def</span> <span class="function-name">foo</span>
       bar(baz(bak(<span class="string">"fing"</span>)))
@@ -1178,7 +1392,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/67">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/80">
 <pre>
     stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
       use <span class="type">Bak</span>
@@ -1191,7 +1405,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/68">
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/81">
 <pre>
     stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
       <b>use <span class="type">Bak</span></b>
@@ -1204,7 +1418,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content bullets mono-bullets thanks" ref="one/01_slide/69">
+</div><div class="slide" data-transition="none"><div class="content bullets mono-bullets thanks" ref="one/01_slide/82">
 <h2>Thanks!</h2>
 
 <ul>
