@@ -54,6 +54,18 @@ body {
   font-family: 'monospace';
 }
 
+.question {
+  font-size: 15em;
+  color: purple;
+}
+
+.content.full-image img {
+  height: 768px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .content h1 {
   background: #D65600;
   color: white;
@@ -246,5 +258,14 @@ b .variable-name {
   top: 80px;
   right: 25px;
   font-size: 16em;
+  color: purple;
+}
+
+.gigantor {
+  position: absolute;
+  top: 35%;
+  right: 160px;
+  font-size: 5.5em;
+  font-weight: bold;
   color: purple;
 }

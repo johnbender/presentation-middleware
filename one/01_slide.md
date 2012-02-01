@@ -18,7 +18,7 @@ johnbender.github.com/presentation-middleware
 
 !SLIDE
 ## Mixin All The Things
-### (╯°□°)╯︵ ┻━┻
+### (ﾉ `Д´)ﾉ ︵ ┻━┻
 
 !SLIDE
 <pre class="xxlarge">
@@ -111,7 +111,7 @@ johnbender.github.com/presentation-middleware
 !SLIDE
 # Rack Middleware
 
-!SLIDE
+!SLIDE link
 ### Python Web Server Gateway Interface v1.0
 
 python.org/dev/peps/pep-0333/
@@ -305,12 +305,222 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 <span class="keyword">end</span>
 </pre>
 
+!SLIDE
+## Endpoints
+
+!SLIDE
+<span class="question">؟</span>
+
 !SLIDE link
 # Vagrant
 vagrantup.com
 
 !SLIDE
 ## Virtual Machines
+
+!SLIDE
+### `$ vagrant suspend`
+
+!SLIDE
+<pre>
+<span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">General</span>::<span class="type">Validate</span>
+  use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+  use <span class="type">VM</span>::<span class="type">Suspend</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre>
+<span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">General</span>::<span class="type">Validate</span>
+  use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+  use <span class="type">VM</span>::<span class="type">Suspend</span>
+<span class="keyword">end</span>
+</pre>
+<span class="right-arrow">↓</span>
+
+!SLIDE
+<pre>
+<span class="type">Builder</span>.new <span class="keyword">do</span>
+  <b>use <span class="type">General</span>::<span class="type">Validate</span></b>
+  use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+  use <span class="type">VM</span>::<span class="type">Suspend</span>
+<span class="keyword">end</span>
+</pre>
+<span class="right-arrow">↓</span>
+
+!SLIDE
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">General</span>
+  <span class="keyword">class</span> <span class="type">Validate</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span>, <span class="variable-name">@env</span> = app, env
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <b><span class="function-name">call</span>(env)</b>
+      <span class="keyword">if</span> !<span class="variable-name">@env</span>[<span class="string">"validate"</span>]
+        <span class="variable-name">@env</span>[<span class="constant">:vm</span>].config.validate!(<span class="variable-name">@env</span>[<span class="constant">:vm</span>].env)
+      <span class="keyword">end</span>
+
+      <span class="variable-name">@app</span>.call(<span class="variable-name">@env</span>)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">General</span>
+  <span class="keyword">class</span> <span class="type">Validate</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span>, <span class="variable-name">@env</span> = app, env
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="keyword">if</span> !<span class="variable-name">@env</span>[<span class="string">"validate"</span>]
+        <b><span class="variable-name">@env</span>[<span class="constant">:vm</span>].config.validate!(<span class="variable-name">@env</span>[<span class="constant">:vm</span>].env)</b>
+      <span class="keyword">end</span>
+
+      <span class="variable-name">@app</span>.call(<span class="variable-name">@env</span>)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">General</span>
+  <span class="keyword">class</span> <span class="type">Validate</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span>, <span class="variable-name">@env</span> = app, env
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="keyword">if</span> !<span class="variable-name">@env</span>[<span class="string">"validate"</span>]
+        <span class="variable-name">@env</span>[<span class="constant">:vm</span>].config.validate!(<span class="variable-name">@env</span>[<span class="constant">:vm</span>].env)
+      <span class="keyword">end</span>
+
+      <b><span class="variable-name">@app</span>.call(<span class="variable-name">@env</span>)</b>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre>
+<span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">General</span>::<span class="type">Validate</span>
+  <b>use <span class="type">VM</span>::<span class="type">CheckAccessible</span></b>
+  use <span class="type">VM</span>::<span class="type">Suspend</span>
+<span class="keyword">end</span>
+</pre>
+<span class="right-arrow">↓</span>
+
+!SLIDE
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">VM</span>
+  <span class="keyword">class</span> <span class="type">CheckAccessible</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <b><span class="function-name">call</span>(env)</b>
+      <span class="keyword">if</span> env[<span class="constant">:vm</span>].state == <span class="constant">:inaccessible</span>
+        <span class="keyword">raise</span> <span class="type">Errors</span>::<span class="type">VMInaccessible</span>
+      <span class="keyword">end</span>
+
+      <span class="variable-name">@app</span>.call(env)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">VM</span>
+  <span class="keyword">class</span> <span class="type">CheckAccessible</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="keyword">if</span> env[<span class="constant">:vm</span>].state == <span class="constant">:inaccessible</span>
+        <span class="keyword">raise</span> <span class="type">Errors</span>::<span class="type">VMInaccessible</span>
+      <span class="keyword">end</span>
+
+      <b><span class="variable-name">@app</span>.call(env)</b>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre>
+<span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">General</span>::<span class="type">Validate</span>
+  use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+  <b>use <span class="type">VM</span>::<span class="type">Suspend</span></b>
+<span class="keyword">end</span>
+</pre>
+<span class="right-arrow">↓</span>
+
+!SLIDE
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">VM</span>
+  <span class="keyword">class</span> <span class="type">Suspend</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <b><span class="function-name">call</span>(env)</b>
+      <span class="keyword">if</span> env[<span class="constant">:vm</span>].state == <span class="constant">:running</span>
+        env[<span class="constant">:vm</span>].driver.suspend
+      <span class="keyword">end</span>
+
+      <span class="variable-name">@app</span>.call(env)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">VM</span>
+  <span class="keyword">class</span> <span class="type">Suspend</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="keyword">if</span> env[<span class="constant">:vm</span>].state == <span class="constant">:running</span>
+        <b>env[<span class="constant">:vm</span>].driver.suspend</b>
+      <span class="keyword">end</span>
+
+      <span class="variable-name">@app</span>.call(env)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre class="large">
+<span class="keyword">module</span> <span class="type">Vagrant</span>::<span class="type">Action</span>::<span class="type">VM</span>
+  <span class="keyword">class</span> <span class="type">Suspend</span>
+    <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
+      <span class="variable-name">@app</span> = app
+    <span class="keyword">end</span>
+
+    <span class="keyword">def</span> <span class="function-name">call</span>(env)
+      <span class="keyword">if</span> env[<span class="constant">:vm</span>].state == <span class="constant">:running</span>
+        env[<span class="constant">:vm</span>].driver.suspend
+      <span class="keyword">end</span>
+
+      <b><span class="variable-name">@app</span>.call(env)</b>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
 
 !SLIDE
 ### `$ vagrant up`
@@ -342,42 +552,34 @@ vagrantup.com
 </pre>
 
 !SLIDE
-## Virtual Machine Class
-### ε(´סּ︵סּ`)з
-
-!SLIDE
-## Middleware
-
-!SLIDE
-<pre class="large">
-<span class="keyword">module</span> <span class="type">Vagrant</span>
-  <span class="keyword">module</span> <span class="type">Action</span>
-    <span class="keyword">module</span> <span class="type">VM</span>
-      <span class="keyword">class</span> <span class="type">Halt</span>
-        <span class="keyword">def</span> <span class="function-name">initialize</span>(app, env)
-          <span class="variable-name">@app</span> = app
-        <span class="keyword">end</span>
-
-        <span class="keyword">def</span> <span class="function-name">call</span>(env)
-          env[<span class="constant">:vm</span>].guest.halt
-          <span class="variable-name">@app</span>.call(env)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
+<pre class="xlarge">
+    <span class="type">Builder</span>.new <span class="keyword">do</span>
+      use <span class="type">General</span>::<span class="type">Validate</span>
+      use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+      use <span class="type">VM</span>::<span class="type">CheckBox</span>
+      use <span class="type">VM</span>::<span class="type">Import</span>
+      use <span class="type">VM</span>::<span class="type">CheckGuestAdditions</span>
+      use <span class="type">VM</span>::<span class="type">MatchMACAddress</span>
+      use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+      use <span class="type">VM</span>::<span class="type">CleanMachineFolder</span>
+      use <span class="type">VM</span>::<span class="type">ClearForwardedPorts</span>
+      use <span class="type">VM</span>::<span class="type">CheckPortCollisions</span>
+      use <span class="type">VM</span>::<span class="type">ForwardPorts</span>
+      use <span class="type">VM</span>::<span class="type">Provision</span>
+      use <span class="type">VM</span>::<span class="type">NFS</span>
+      use <span class="type">VM</span>::<span class="type">ClearSharedFolders</span>
+      use <span class="type">VM</span>::<span class="type">ShareFolders</span>
+      use <span class="type">VM</span>::<span class="type">HostName</span>
+      use <span class="type">VM</span>::<span class="type">ClearNetworkInterfaces</span>
+      use <span class="type">VM</span>::<span class="type">Network</span>
+      use <span class="type">VM</span>::<span class="type">Customize</span>
+      use <span class="type">VM</span>::<span class="type">Boot</span>
     <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
 </pre>
+<span class="gigantor">(╬ ಠ益ಠ)</span>
 
-!SLIDE bullets
-### Wins
-* more general
-* familiar mechanics
-* recover
-
-!SLIDE bullets
-### Issues
-* dependencies
-* env dumping ground
+!SLIDE
+## Virtual Machine Class
 
 !SLIDE
 # Diaspora User
