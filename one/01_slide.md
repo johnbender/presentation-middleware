@@ -576,10 +576,7 @@ vagrantup.com
       use <span class="type">VM</span>::<span class="type">Boot</span>
     <span class="keyword">end</span>
 </pre>
-<span class="gigantor">(╬ ಠ益ಠ)</span>
-
-!SLIDE
-## Virtual Machine Class
+<div class="gigantor">(╬ ಠ益ಠ)</div>
 
 !SLIDE
 # Diaspora User
@@ -848,7 +845,7 @@ vagrantup.com
 
     # ... redacted ...
 
-    mailman = <b><span class="type">Postzord</span></b>::<span class="type">Dispatcher</span>.build(<span class="variable-name">self</span>, retraction, opts)
+    mailman = <span class="type">Postzord</span>::<span class="type">Dispatcher</span>.build(<span class="variable-name">self</span>, retraction, opts)
     mailman.post
 
     retraction.perform(<span class="variable-name">self</span>)
@@ -859,12 +856,54 @@ vagrantup.com
   # ... aaaaand we're done here ...
   </pre>
 
-!SLIDE center
-<img src="zord.jpg" style="max-height: 600px"></img>
+!SLIDE
+<pre class="extreme">
+
+  <span class="comment-delimiter"># </span><span class="comment">Get the user's like of a post, if there is one.
+</span>  <span class="comment-delimiter"># </span><span class="comment">@param [Post] post
+</span>  <span class="comment-delimiter"># </span><span class="comment">@return [Like]
+</span>  <span class="keyword">def</span> <span class="function-name">like_for</span>(target)
+    <span class="keyword">if</span> target.likes.loaded?
+      <span class="keyword">return</span> target.likes.detect{ |like| like.author_id == <span class="variable-name">self</span>.person.id }
+    <span class="keyword">else</span>
+      <span class="keyword">return</span> <span class="type">Like</span>.where(<span class="constant">:author_id</span> =&gt; <span class="variable-name">self</span>.person.id, <span class="constant">:target_type</span> =&gt; target.class.base_class.to_s, <span class="constant">:target_id</span> =&gt; target.id).first
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="comment-delimiter">######### </span><span class="comment">Mailer #######################
+</span>  <span class="keyword">def</span> <span class="function-name">mail</span>(job, *args)
+    pref = job.to_s.gsub(<span class="string">'Jobs::Mail::'</span>, <span class="string">''</span>).underscore
+    <span class="keyword">if</span>(<span class="variable-name">self</span>.disable_mail == <span class="variable-name">false</span> &amp;&amp; !<span class="variable-name">self</span>.user_preferences.exists?(<span class="constant">:email_type</span> =&gt; pref))
+      <span class="type">Resque</span>.enqueue(job, *args)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="keyword">def</span> <span class="function-name">mail_confirm_email</span>
+    <span class="keyword">return</span> <span class="variable-name">false</span> <span class="keyword">if</span> unconfirmed_email.blank?
+    <span class="type">Resque</span>.enqueue(<span class="type">Jobs</span>::<span class="type">Mail</span>::<span class="type">ConfirmEmail</span>, id)
+    <span class="variable-name">true</span>
+  <span class="keyword">end</span>
+
+  <span class="comment-delimiter">######### </span><span class="comment">Posts and Such ###############
+</span>  <span class="keyword">def</span> <span class="function-name">retract</span>(target, opts={})
+
+    # ... redacted ...
+
+    mailman = <span class="type">Postzord</span>::<span class="type">Dispatcher</span>.build(<span class="variable-name">self</span>, retraction, opts)
+    mailman.post
+
+    retraction.perform(<span class="variable-name">self</span>)
+
+    retraction
+  <span class="keyword">end</span>
+
+  # ... aaaaand we're done here ...
+  </pre>
+
+<div class="gigantor">(屮ﾟДﾟ)屮</div>
 
 !SLIDE
-### 500+ lines
-### ε(´סּ︵סּ`)з
+## Method to Middleware
 
 !SLIDE
 <h3><code class="large">accept_invitation!</code></h3>
@@ -944,27 +983,6 @@ vagrantup.com
     <span class="keyword">end</span>
   <span class="keyword">end</span>
 </pre>
-
-!SLIDE
-<pre class="large">
-  <span class="keyword">def</span> <span class="function-name">setup</span>(opts)
-    <span class="variable-name">self</span>.username = opts[<span class="constant">:username</span>]
-    <span class="variable-name">self</span>.email = opts[<span class="constant">:email</span>]
-    <span class="variable-name">self</span>.language = opts[<span class="constant">:language</span>]
-    <span class="variable-name">self</span>.language ||= <span class="type">I18n</span>.locale.to_s
-    <span class="variable-name">self</span>.valid?
-    errors = <span class="variable-name">self</span>.errors
-    errors.delete <span class="constant">:person</span>
-    <span class="keyword">return</span> <span class="keyword">if</span> errors.size &gt; 0
-    <span class="variable-name">self</span>.set_person(<span class="type">Person</span>.new)
-    <span class="variable-name">self</span>.generate_keys
-    <span class="variable-name">self</span>
-  <span class="keyword">end</span>
-</pre>
-
-
-!SLIDE
-### Middlewareified
 
 !SLIDE
 <pre class="xxlarge">
@@ -1165,13 +1183,13 @@ vagrantup.com
 <pre style="font-size: 1.9em">
 <span class="keyword">class</span> <span class="type">InvitationsController</span> &lt; <span class="type">Devise</span>::<span class="type">InvitationsController</span>
   <span class="keyword">def</span> <span class="function-name">update</span>
-    <span class="comment-delimiter"># </span><span class="comment">... redacted ...
+    <span class="comment-delimiter"># </span><span class="comment">... omitted ...
 </span>
     user = <span class="type">User</span>.find_by_invitation_token!(invitation_token)
 
     user.accept_invitation!(params[<span class="constant">:user</span>])
 
-    <span class="comment-delimiter"># </span><span class="comment">... redacted ...
+    <span class="comment-delimiter"># </span><span class="comment">... omitted ...
 </span>  <span class="keyword">end</span>
 <span class="keyword">end</span>
 </pre>
@@ -1186,6 +1204,20 @@ vagrantup.com
     <span class="comment-delimiter"># </span><span class="comment">or
 </span>
     run(<span class="constant">:accept_invitation</span>, opts.merge(<span class="constant">:user</span> =&gt; user))
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre style="font-size: 2em">
+<span class="keyword">class</span> <span class="type">User</span> &lt; <span class="type">ActiveRecord</span>::<span class="type">Base</span>
+  <span class="keyword">def</span> <span class="function-name">accept_invitation!</span>(opts = {})
+    accept = <span class="type">Middleware</span>::<span class="type">AcceptInvitation</span>.new(lambda {})
+    accept.call(opts.merge(<span class="constant">:user</span> =&gt; user))
+
+    <span class="comment-delimiter"># </span><span class="comment">or
+</span>
+    <b>run(<span class="constant">:accept_invitation</span>, opts.merge(<span class="constant">:user</span> =&gt; user))</b>
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </pre>
@@ -1260,6 +1292,7 @@ vagrantup.com
 
 !SLIDE bullets mono-bullets thanks
 ## Thanks!
+### d(*⌒▽⌒*)b
 * @johnbender
 * johnbender.us
 * github.com/johnbender
