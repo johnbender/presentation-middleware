@@ -899,8 +899,7 @@ vagrantup.com
 
   # ... aaaaand we're done here ...
   </pre>
-
-<div class="gigantor">(屮ﾟДﾟ)屮</div>
+<div class="gigantor squished">(屮ﾟДﾟ)屮</div>
 
 !SLIDE
 ## Method to Middleware
