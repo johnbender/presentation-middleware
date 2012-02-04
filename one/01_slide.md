@@ -554,6 +554,32 @@ vagrantup.com
 !SLIDE
 <pre class="xlarge">
     <span class="type">Builder</span>.new <span class="keyword">do</span>
+      <b>use <span class="type">General</span>::<span class="type">Validate</span></b>
+      <b>use <span class="type">VM</span>::<span class="type">CheckAccessible</span></b>
+      use <span class="type">VM</span>::<span class="type">CheckBox</span>
+      use <span class="type">VM</span>::<span class="type">Import</span>
+      use <span class="type">VM</span>::<span class="type">CheckGuestAdditions</span>
+      use <span class="type">VM</span>::<span class="type">MatchMACAddress</span>
+      use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
+      use <span class="type">VM</span>::<span class="type">CleanMachineFolder</span>
+      use <span class="type">VM</span>::<span class="type">ClearForwardedPorts</span>
+      use <span class="type">VM</span>::<span class="type">CheckPortCollisions</span>
+      use <span class="type">VM</span>::<span class="type">ForwardPorts</span>
+      use <span class="type">VM</span>::<span class="type">Provision</span>
+      use <span class="type">VM</span>::<span class="type">NFS</span>
+      use <span class="type">VM</span>::<span class="type">ClearSharedFolders</span>
+      use <span class="type">VM</span>::<span class="type">ShareFolders</span>
+      use <span class="type">VM</span>::<span class="type">HostName</span>
+      use <span class="type">VM</span>::<span class="type">ClearNetworkInterfaces</span>
+      use <span class="type">VM</span>::<span class="type">Network</span>
+      use <span class="type">VM</span>::<span class="type">Customize</span>
+      use <span class="type">VM</span>::<span class="type">Boot</span>
+    <span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre class="xlarge">
+    <span class="type">Builder</span>.new <span class="keyword">do</span>
       use <span class="type">General</span>::<span class="type">Validate</span>
       use <span class="type">VM</span>::<span class="type">CheckAccessible</span>
       use <span class="type">VM</span>::<span class="type">CheckBox</span>
@@ -1226,33 +1252,6 @@ vagrantup.com
 
 !SLIDE
 ## And Then‽
-
-!SLIDE
-<pre>
-noob_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
-  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span>
-  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Noob</span>
-<span class="keyword">end</span>
-
-veteran_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
-  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span>
-  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Veteran</span>
-<span class="keyword">end</span>
-</pre>
-
-!SLIDE
-<pre>
-noob_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
-  <b>use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span></b>
-  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Noob</span>
-<span class="keyword">end</span>
-
-veteran_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
-  <b>use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span></b>
-  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Veteran</span>
-<span class="keyword">end</span>
-</pre>
-
 !SLIDE
 <pre>
 it <span class="string">"should setup the user"</span> <span class="keyword">do</span>
@@ -1261,9 +1260,34 @@ it <span class="string">"should setup the user"</span> <span class="keyword">do<
 <span class="keyword">end</span>
 </pre>
 
+!SLIDE
+<pre>
+noob_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Noob</span>
+<span class="keyword">end</span>
+
+veteran_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Veteran</span>
+<span class="keyword">end</span>
+</pre>
 
 !SLIDE
-# Where else?
+<pre>
+noob_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
+  <b>use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span></b>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Noob</span>
+<span class="keyword">end</span>
+
+veteran_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
+  <b>use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span></b>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Veteran</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+# When and Where
 
 !SLIDE
 ## Reuse
@@ -1305,7 +1329,7 @@ it <span class="string">"should setup the user"</span> <span class="keyword">do<
 <pre>
 <span class="keyword">def</span> <span class="function-name">foo</span>
   bar(1)
-  baz(1, 2)
+  baz(2)
   bak(<span class="string">"fing"</span>)
 <span class="keyword">end</span>
 </pre>
@@ -1315,9 +1339,20 @@ it <span class="string">"should setup the user"</span> <span class="keyword">do<
 <pre class="right">
 <span class="type">Builder</span>.new <span class="keyword">do</span>
   use <span class="type">Bar</span>, 1
-  use <span class="type">Baz</span>, 1, 2
+  use <span class="type">Baz</span>, 2
   use <span class="type">Bak</span>, <span class="string">"fing"</span>
 <span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre>
+<span class="variable-name">@stack</span> ||= <span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">Bar</span>
+  use <span class="type">Baz</span>
+  use <span class="type">Bak</span>
+<span class="keyword">end</span>
+
+<span class="variable-name">@stack</span>.call(1, 2, <span class="string">"fing"</span>)
 </pre>
 
 !SLIDE
