@@ -1,5 +1,5 @@
 !SLIDE link
-# Middleware: <br/> A General Abstraction
+# <b>Middleware</b><br/><span class="small">A General Abstraction</class>
 
 johnbender.github.com/presentation-middleware
 
@@ -309,7 +309,7 @@ app = <span class="type">Rack</span>::<span class="type">Builder</span>.new <spa
 ## Endpoints
 
 !SLIDE
-<span class="question">؟</span>
+<div class="question">؟</div>
 
 !SLIDE link
 # Vagrant
@@ -577,6 +577,9 @@ vagrantup.com
     <span class="keyword">end</span>
 </pre>
 <div class="gigantor">(╬ ಠ益ಠ)</div>
+
+!SLIDE
+<div class="question" style="-webkit-transform: rotate(180deg);">؟</div>
 
 !SLIDE
 # Diaspora User
@@ -1198,11 +1201,11 @@ vagrantup.com
 <span class="keyword">class</span> <span class="type">User</span> &lt; <span class="type">ActiveRecord</span>::<span class="type">Base</span>
   <span class="keyword">def</span> <span class="function-name">accept_invitation!</span>(opts = {})
     accept = <span class="type">Middleware</span>::<span class="type">AcceptInvitation</span>.new(lambda {})
-    accept.call(opts.merge(<span class="constant">:user</span> =&gt; user))
+    accept.call(opts.merge(<span class="constant">:user</span> =&gt; <span class="variable-name">self</span>))
 
     <span class="comment-delimiter"># </span><span class="comment">or
 </span>
-    run(<span class="constant">:accept_invitation</span>, opts.merge(<span class="constant">:user</span> =&gt; user))
+    run(<span class="constant">:accept_invitation</span>, opts.merge(<span class="constant">:user</span> =&gt; <span class="variable-name">self</span>))
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </pre>
@@ -1212,87 +1215,131 @@ vagrantup.com
 <span class="keyword">class</span> <span class="type">User</span> &lt; <span class="type">ActiveRecord</span>::<span class="type">Base</span>
   <span class="keyword">def</span> <span class="function-name">accept_invitation!</span>(opts = {})
     accept = <span class="type">Middleware</span>::<span class="type">AcceptInvitation</span>.new(lambda {})
-    accept.call(opts.merge(<span class="constant">:user</span> =&gt; user))
+    accept.call(opts.merge(<span class="constant">:user</span> =&gt; <span class="variable-name">self</span>))
 
     <span class="comment-delimiter"># </span><span class="comment">or
 </span>
-    <b>run(<span class="constant">:accept_invitation</span>, opts.merge(<span class="constant">:user</span> =&gt; user))</b>
+    <b>run(<span class="constant">:accept_invitation</span>, opts.merge(<span class="constant">:user</span> =&gt; <span class="variable-name">self</span>))</b>
   <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+## And Then‽
+
+!SLIDE
+<pre>
+noob_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Noob</span>
+<span class="keyword">end</span>
+
+veteran_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Veteran</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre>
+noob_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
+  <b>use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span></b>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Noob</span>
+<span class="keyword">end</span>
+
+veteran_stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
+  <b>use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">AcceptInvite</span></b>
+  use <span class="type">Actions</span>::<span class="type">User</span>::<span class="type">Veteran</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+<pre>
+it <span class="string">"should setup the user"</span> <span class="keyword">do</span>
+  mock.expects(<span class="constant">:setup</span>)
+  <span class="variable-name">@middleware</span>.call(<span class="constant">:user</span> =&gt; mock)
 <span class="keyword">end</span>
 </pre>
 
 
 !SLIDE
-# Wrap Up
-
-!SLIDE bullets
-### Delegates?
-* moving code around
-* more state storage
-* entry point ambiguity
+# Where else?
 
 !SLIDE
-## Real Wins
-
-!SLIDE
-### Serial Method Invocation
+## Reuse
 
 !SLIDE
 <pre>
-    <span class="keyword">def</span> <span class="function-name">foo</span>
-      bar(1)
-      baz(1, 2)
-      bak(<span class="string">"fing"</span>)
-    <span class="keyword">end</span>
-</pre>
-
-!SLIDE
-<pre>
-    stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
+    <span class="type">Builder</span>.new <span class="keyword">do</span>
       use <span class="type">Bar</span>
       use <span class="type">Baz</span>
       use <span class="type">Bak</span>
     <span class="keyword">end</span>
 
-    stack.call( 1, 1, 2, <span class="string">"fing"</span>)
-</pre>
-
-!SLIDE
-### Function Composition
-
-!SLIDE
-<pre>
-    <span class="keyword">def</span> <span class="function-name">foo</span>
-      bar(baz(bak(<span class="string">"fing"</span>)))
-    <span class="keyword">end</span>
-</pre>
-
-!SLIDE
-<pre>
-    stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
-      use <span class="type">Bak</span>
-      use <span class="type">Baz</span>
+    <span class="type">Builder</span>.new <span class="keyword">do</span>
       use <span class="type">Bar</span>
+      use <span class="type">Bang</span>
+      use <span class="type">Bok</span>
     <span class="keyword">end</span>
-
-    stack.call(<span class="string">"fing"</span>)
 </pre>
 
 !SLIDE
 <pre>
-    stack = <span class="type">Builder</span>.new <span class="keyword">do</span>
-      <b>use <span class="type">Bak</span></b>
-      <b>use <span class="type">Baz</span></b>
+    <span class="type">Builder</span>.new <span class="keyword">do</span>
       <b>use <span class="type">Bar</span></b>
+      use <span class="type">Baz</span>
+      use <span class="type">Bak</span>
     <span class="keyword">end</span>
 
-    stack.call(<span class="string">"fing"</span>)
+    <span class="type">Builder</span>.new <span class="keyword">do</span>
+      <b>use <span class="type">Bar</span></b>
+      use <span class="type">Bang</span>
+      use <span class="type">Bok</span>
+    <span class="keyword">end</span>
+</pre>
+
+!SLIDE
+## Serial Invocation
+
+!SLIDE
+<pre>
+<span class="keyword">def</span> <span class="function-name">foo</span>
+  bar(1)
+  baz(1, 2)
+  bak(<span class="string">"fing"</span>)
+<span class="keyword">end</span>
+</pre>
+
+<div class="centered-arrow" style="margin-left: -60px;">→</div>
+
+<pre class="right">
+<span class="type">Builder</span>.new <span class="keyword">do</span>
+  use <span class="type">Bar</span>, 1
+  use <span class="type">Baz</span>, 1, 2
+  use <span class="type">Bak</span>, <span class="string">"fing"</span>
+<span class="keyword">end</span>
+</pre>
+
+!SLIDE
+## Composition
+
+!SLIDE code-center
+<pre class="top">
+<span class="keyword">def</span> <span class="function-name">foo</span>
+  bar(baz(bak(<span class="string">"fing"</span>)))
+<span class="keyword">end</span>
+</pre>
+<div class="centered-arrow" style="margin-top: -80px; font-size: 13em">↓</div>
+<pre class="bottom">
+<span class="type">Builder</span>.new {
+  use <span class="type">Bak</span>
+  use <span class="type">Baz</span>
+  use <span class="type">Bar</span>
+}.call(<span class="string">"fing"</span>)
 </pre>
 
 !SLIDE bullets mono-bullets thanks
-## Thanks!
-### d(*⌒▽⌒*)b
+# ( * ⌒▽⌒ * )
 * @johnbender
 * johnbender.us
 * github.com/johnbender
-

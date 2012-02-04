@@ -4,11 +4,8 @@ def foo
   bak("fing")
 end
 
-stack = Builder.new do
-  use Bar
-  use Baz
-  use Bak
+Builder.new do
+  use Bar, 1
+  use Baz, 1, 2
+  use Bak, "fing"
 end
-
-stack.call( 1, 1, 2, "fing")
-

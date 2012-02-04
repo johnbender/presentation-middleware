@@ -27,6 +27,12 @@ body {
   font-size: 3em;
 }
 
+.content.thanks > h1 {
+  font-size: 8em;
+  padding: 0.5em 15px;
+  margin-bottom: 0.2em;
+}
+
 .link p {
   font-size: 2.5em;
 }
@@ -55,8 +61,9 @@ body {
 }
 
 .question {
-  font-size: 15em;
+  font-size: 40em;
   color: purple;
+  text-align: center;
 }
 
 .content.full-image img {
@@ -86,6 +93,14 @@ h1, h2, h3, h4 {
   font-family: Helvetica, Arial, sans-serif;
   padding-left: 50px;
   padding-right: 50px;
+}
+
+h1 b {
+  font-size: 1.48em;
+}
+
+h1 .small {
+  font-size: 0.8em;
 }
 
 .title h3 {
@@ -160,6 +175,24 @@ span.monospace {
 
 .content > pre.medium {
   font-size: 2.7em;
+}
+
+.content > pre.right {
+  position: absolute;
+  top: 218px;
+  right: 50px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.content > pre.top {
+  position: absolute;
+  top: 20px;
+}
+
+.content > pre.bottom {
+  position: absolute;
+  bottom: 90px;
 }
 
 .content > pre {
@@ -261,6 +294,19 @@ b .variable-name {
   color: purple;
 }
 
+.centered-arrow {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 10000;
+  text-align: center;
+  padding-top: 22%;
+  font-size: 16em;
+  color: purple;
+}
+
 .gigantor {
   position: absolute;
   top: 0px;
@@ -271,9 +317,14 @@ b .variable-name {
   color: purple;
   height: 100%;
   padding-top: 25%;
-  background-color: rgba(255,255,255,0.5) ;
+  background-color: rgba(255,255,255,0.7) ;
 }
 
 .squished {
   font-size: 14em;
 }
+
+.code-center > pre {
+  margin-left: 220px;
+}
+

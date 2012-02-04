@@ -2,10 +2,8 @@ def foo
   bar(baz(bak("fing")))
 end
 
-stack = Builder.new do
+Builder.new {
   use Bak
   use Baz
   use Bar
-end
-
-stack.call("fing")
+}.call("fing")
